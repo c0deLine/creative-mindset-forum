@@ -17,7 +17,7 @@ export default function Home() {
 
   async function loadPosts() {
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_POSTS_URL || "");
+      const res = await fetch("/api/posts");
       const data = await res.json();
       setPosts(Array.isArray(data) ? data : []);
     } catch (error) {
