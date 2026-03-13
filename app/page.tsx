@@ -1,20 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Post = {
   id: string;
   author?: string;
   title: string;
   content: string;
+  topic?: string;
   createdAt: string;
 };
+
+const topics = [
+  "General",
+  "Mindset",
+  "Productivity",
+  "Creativity",
+  "Career",
+  "Tech",
+  "Life",
+];
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [topic, setTopic] = useState("General");
+  const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -44,6 +57,7 @@ export default function Home() {
           author,
           title,
           content,
+          topic,
         }),
       });
 
@@ -58,6 +72,7 @@ export default function Home() {
       setAuthor("");
       setTitle("");
       setContent("");
+      setTopic("General");
       await loadPosts();
     } finally {
       setLoading(false);
@@ -87,6 +102,20 @@ export default function Home() {
     loadPosts();
   }, []);
 
+  const filteredPosts = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    if (!term) return posts;
+
+    return posts.filter((post) => {
+      return (
+        post.title?.toLowerCase().includes(term) ||
+        post.content?.toLowerCase().includes(term) ||
+        post.author?.toLowerCase().includes(term) ||
+        post.topic?.toLowerCase().includes(term)
+      );
+    });
+  }, [posts, search]);
+
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.28),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(168,85,247,0.18),_transparent_25%),linear-gradient(to_bottom,_#0f172a,_#020617)]" />
@@ -98,10 +127,6 @@ export default function Home() {
               Creative Mindset
             </div>
             <div className="text-sm text-slate-400">Serverless Community Forum</div>
-          </div>
-
-          <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">
-            {posts.length} post{posts.length === 1 ? "" : "s"}
           </div>
         </div>
       </header>
@@ -163,33 +188,63 @@ export default function Home() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-300">
+                Topic
+              </label>
+              <select
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
+              >
+                {topics.map((item) => (
+                  <option key={item} value={item} className="bg-slate-900 text-white">
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-300">
+                Post Title
+              </label>
+              <input
+                type="text"
+                placeholder="Enter a title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-300">
+                Post
+              </label>
+              <textarea
+                placeholder="Write your post here..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                required
+                className="min-h-[160px] w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-4 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-300">
+                Name
+              </label>
               <input
                 type="text"
                 placeholder="Your name"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 required
-                className="rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
-              />
-
-              <input
-                type="text"
-                placeholder="Post title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className="rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
               />
             </div>
-
-            <textarea
-              placeholder="Write your post here..."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-              className="min-h-[160px] w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-4 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
-            />
 
             <div className="flex flex-col gap-3 pt-2 md:flex-row md:items-center md:justify-between">
               <button
@@ -210,23 +265,36 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-2xl font-semibold text-white">Forum Posts</h2>
               <p className="mt-1 text-slate-400">Newest posts appear first.</p>
             </div>
+
+            <div className="w-full md:max-w-sm">
+              <label className="mb-2 block text-sm font-medium text-slate-300">
+                Search posts
+              </label>
+              <input
+                type="text"
+                placeholder="Search by title, post, topic, or author"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
+              />
+            </div>
           </div>
 
-          {posts.length === 0 ? (
+          {filteredPosts.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 p-10 text-center text-slate-300">
-              <div className="mb-2 text-xl font-medium text-white">No posts yet</div>
+              <div className="mb-2 text-xl font-medium text-white">No matching posts</div>
               <p className="text-sm text-slate-400">
-                Be the first to start the conversation.
+                Try a different search term or create a new post.
               </p>
             </div>
           ) : (
             <div className="space-y-5">
-              {posts.map((post) => (
+              {filteredPosts.map((post) => (
                 <article
                   key={post.id}
                   className="group rounded-3xl border border-white/10 bg-white/8 p-6 shadow-xl backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10"
@@ -234,6 +302,9 @@ export default function Home() {
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="min-w-0 flex-1">
                       <div className="mb-3 flex flex-wrap items-center gap-2">
+                        <span className="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-violet-200">
+                          {post.topic || "General"}
+                        </span>
                         <span className="rounded-full border border-blue-400/20 bg-blue-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-200">
                           {post.author || "Anonymous"}
                         </span>
