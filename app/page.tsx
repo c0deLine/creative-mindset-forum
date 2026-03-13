@@ -88,218 +88,89 @@ export default function Home() {
   }, []);
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background:
-          "radial-gradient(circle at top left, #1d4ed8 0%, #0f172a 35%, #020617 100%)",
-        color: "#e5e7eb",
-        fontFamily:
-          'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        padding: "32px 20px 64px",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-        }}
-      >
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.2fr 0.8fr",
-            gap: "24px",
-            alignItems: "stretch",
-            marginBottom: "28px",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: "24px",
-              padding: "32px",
-              backdropFilter: "blur(12px)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-block",
-                padding: "6px 12px",
-                borderRadius: "999px",
-                background: "rgba(96,165,250,0.18)",
-                border: "1px solid rgba(147,197,253,0.25)",
-                color: "#bfdbfe",
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                marginBottom: "18px",
-              }}
-            >
-              AWS Serverless Forum
+    <main className="min-h-screen bg-slate-950 text-slate-100">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.28),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(168,85,247,0.18),_transparent_25%),linear-gradient(to_bottom,_#0f172a,_#020617)]" />
+
+      <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <div>
+            <div className="text-lg font-semibold tracking-tight text-white">
+              Creative Mindset
+            </div>
+            <div className="text-sm text-slate-400">Serverless Community Forum</div>
+          </div>
+
+          <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">
+            {posts.length} post{posts.length === 1 ? "" : "s"}
+          </div>
+        </div>
+      </header>
+
+      <div className="mx-auto max-w-6xl px-6 py-10">
+        <section className="mb-8 grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
+          <div className="rounded-3xl border border-white/10 bg-white/8 p-8 shadow-2xl backdrop-blur-xl">
+            <div className="mb-4 inline-flex rounded-full border border-blue-400/20 bg-blue-400/10 px-3 py-1 text-sm font-medium text-blue-200">
+              AWS • Next.js • Lambda • S3
             </div>
 
-            <h1
-              style={{
-                margin: "0 0 14px 0",
-                fontSize: "3rem",
-                lineHeight: 1.05,
-                letterSpacing: "-0.04em",
-                color: "#ffffff",
-              }}
-            >
-              Creative Mindset
+            <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
+              Build ideas.
+              <br />
+              Share momentum.
             </h1>
 
-            <p
-              style={{
-                margin: 0,
-                fontSize: "1.08rem",
-                lineHeight: 1.7,
-                color: "#cbd5e1",
-                maxWidth: "650px",
-              }}
-            >
-              A modern community board powered by Next.js, API Gateway, Lambda,
-              and S3. Share ideas, post updates, and keep the conversation
-              flowing with a clean, lightweight serverless app.
+            <p className="max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
+              A modern, serverless discussion board powered by AWS. Post ideas,
+              share updates, and keep a lightweight community space running on
+              Next.js, API Gateway, Lambda, and S3.
             </p>
           </div>
 
-          <div
-            style={{
-              background: "linear-gradient(135deg, rgba(59,130,246,0.22), rgba(168,85,247,0.16))",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: "24px",
-              padding: "28px",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
-            }}
-          >
-            <h2
-              style={{
-                marginTop: 0,
-                marginBottom: "18px",
-                color: "#ffffff",
-                fontSize: "1.3rem",
-              }}
-            >
-              Quick Stats
-            </h2>
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/10 to-violet-500/10 p-6 shadow-2xl backdrop-blur-xl">
+            <h2 className="mb-5 text-xl font-semibold text-white">Overview</h2>
 
-            <div
-              style={{
-                display: "grid",
-                gap: "14px",
-              }}
-            >
-              <div
-                style={{
-                  padding: "16px",
-                  borderRadius: "18px",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
-                <div style={{ color: "#93c5fd", fontSize: "0.9rem" }}>
-                  Total Posts
-                </div>
-                <div
-                  style={{
-                    fontSize: "2rem",
-                    fontWeight: 700,
-                    marginTop: "6px",
-                    color: "#ffffff",
-                  }}
-                >
-                  {posts.length}
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-white/8 bg-white/6 p-4">
+                <div className="text-sm text-slate-400">Total posts</div>
+                <div className="mt-1 text-3xl font-bold text-white">{posts.length}</div>
+              </div>
+
+              <div className="rounded-2xl border border-white/8 bg-white/6 p-4">
+                <div className="text-sm text-slate-400">Latest activity</div>
+                <div className="mt-2 text-sm leading-6 text-slate-200">
+                  {posts.length > 0
+                    ? new Date(posts[0].createdAt).toLocaleString()
+                    : "No activity yet"}
                 </div>
               </div>
 
-              <div
-                style={{
-                  padding: "16px",
-                  borderRadius: "18px",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
-                <div style={{ color: "#c4b5fd", fontSize: "0.9rem" }}>
-                  Latest Activity
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.98rem",
-                    marginTop: "8px",
-                    color: "#e2e8f0",
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {posts.length > 0
-                    ? new Date(posts[0].createdAt).toLocaleString()
-                    : "No posts yet"}
+              <div className="rounded-2xl border border-white/8 bg-white/6 p-4">
+                <div className="text-sm text-slate-400">Stack</div>
+                <div className="mt-2 text-sm leading-6 text-slate-200">
+                  Amplify Hosting, API Gateway, Lambda, and Amazon S3.
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section
-          style={{
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "24px",
-            padding: "28px",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.28)",
-            marginBottom: "32px",
-          }}
-        >
-          <h2
-            style={{
-              marginTop: 0,
-              marginBottom: "8px",
-              color: "#ffffff",
-              fontSize: "1.5rem",
-            }}
-          >
-            Create a Post
-          </h2>
-          <p
-            style={{
-              marginTop: 0,
-              marginBottom: "22px",
-              color: "#cbd5e1",
-            }}
-          >
-            Share an idea, insight, or question with the community.
-          </p>
+        <section className="mb-10 rounded-3xl border border-white/10 bg-white/8 p-8 shadow-2xl backdrop-blur-xl">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold text-white">Create a Post</h2>
+            <p className="mt-2 text-slate-400">
+              Share a thought, insight, or question with the forum.
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "14px",
-                marginBottom: "14px",
-              }}
-            >
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
               <input
                 type="text"
                 placeholder="Your name"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 required
-                style={{
-                  width: "100%",
-                  padding: "14px 16px",
-                  borderRadius: "14px",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  background: "rgba(15,23,42,0.7)",
-                  color: "#ffffff",
-                  outline: "none",
-                  fontSize: "0.98rem",
-                }}
+                className="rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
               />
 
               <input
@@ -308,16 +179,7 @@ export default function Home() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                style={{
-                  width: "100%",
-                  padding: "14px 16px",
-                  borderRadius: "14px",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  background: "rgba(15,23,42,0.7)",
-                  color: "#ffffff",
-                  outline: "none",
-                  fontSize: "0.98rem",
-                }}
+                className="rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
               />
             </div>
 
@@ -326,60 +188,20 @@ export default function Home() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               required
-              style={{
-                width: "100%",
-                minHeight: "150px",
-                padding: "16px",
-                borderRadius: "14px",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "rgba(15,23,42,0.7)",
-                color: "#ffffff",
-                outline: "none",
-                resize: "vertical",
-                fontSize: "1rem",
-                lineHeight: 1.6,
-              }}
+              className="min-h-[160px] w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-4 text-white outline-none transition focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20"
             />
 
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "16px",
-                marginTop: "18px",
-                flexWrap: "wrap",
-              }}
-            >
+            <div className="flex flex-col gap-3 pt-2 md:flex-row md:items-center md:justify-between">
               <button
                 type="submit"
                 disabled={loading}
-                style={{
-                  padding: "13px 22px",
-                  borderRadius: "14px",
-                  border: "none",
-                  background:
-                    "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
-                  color: "#ffffff",
-                  cursor: "pointer",
-                  fontWeight: 700,
-                  fontSize: "0.96rem",
-                  boxShadow: "0 12px 30px rgba(37,99,235,0.35)",
-                }}
+                className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-900/30 transition hover:scale-[1.01] hover:from-blue-500 hover:to-violet-500 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {loading ? "Posting..." : "Publish Post"}
               </button>
 
               {status ? (
-                <div
-                  style={{
-                    padding: "10px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.08)",
-                    color: "#e2e8f0",
-                    fontSize: "0.95rem",
-                  }}
-                >
+                <div className="rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm text-slate-200">
                   {status}
                 </div>
               ) : null}
@@ -388,142 +210,50 @@ export default function Home() {
         </section>
 
         <section>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "16px",
-              marginBottom: "18px",
-              flexWrap: "wrap",
-            }}
-          >
-            <h2
-              style={{
-                margin: 0,
-                color: "#ffffff",
-                fontSize: "1.6rem",
-              }}
-            >
-              Forum Posts
-            </h2>
-
-            <div
-              style={{
-                color: "#cbd5e1",
-                fontSize: "0.95rem",
-              }}
-            >
-              Showing newest posts first
+          <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold text-white">Forum Posts</h2>
+              <p className="mt-1 text-slate-400">Newest posts appear first.</p>
             </div>
           </div>
 
           {posts.length === 0 ? (
-            <div
-              style={{
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: "24px",
-                padding: "28px",
-                color: "#cbd5e1",
-              }}
-            >
-              No posts yet. Be the first to start the conversation.
+            <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 p-10 text-center text-slate-300">
+              <div className="mb-2 text-xl font-medium text-white">No posts yet</div>
+              <p className="text-sm text-slate-400">
+                Be the first to start the conversation.
+              </p>
             </div>
           ) : (
-            <div
-              style={{
-                display: "grid",
-                gap: "18px",
-              }}
-            >
+            <div className="space-y-5">
               {posts.map((post) => (
                 <article
                   key={post.id}
-                  style={{
-                    background: "rgba(255,255,255,0.08)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    borderRadius: "24px",
-                    padding: "22px",
-                    backdropFilter: "blur(10px)",
-                    boxShadow: "0 20px 50px rgba(0,0,0,0.22)",
-                  }}
+                  className="group rounded-3xl border border-white/10 bg-white/8 p-6 shadow-xl backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10"
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      gap: "18px",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <div style={{ flex: 1, minWidth: "250px" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "10px",
-                          alignItems: "center",
-                          flexWrap: "wrap",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        <span
-                          style={{
-                            padding: "5px 10px",
-                            borderRadius: "999px",
-                            background: "rgba(96,165,250,0.16)",
-                            color: "#bfdbfe",
-                            fontSize: "0.8rem",
-                            fontWeight: 600,
-                          }}
-                        >
+                  <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-3 flex flex-wrap items-center gap-2">
+                        <span className="rounded-full border border-blue-400/20 bg-blue-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-200">
                           {post.author || "Anonymous"}
                         </span>
-                        <span
-                          style={{
-                            color: "#94a3b8",
-                            fontSize: "0.85rem",
-                          }}
-                        >
+                        <span className="text-sm text-slate-400">
                           {new Date(post.createdAt).toLocaleString()}
                         </span>
                       </div>
 
-                      <h3
-                        style={{
-                          margin: "0 0 10px 0",
-                          color: "#ffffff",
-                          fontSize: "1.3rem",
-                        }}
-                      >
+                      <h3 className="mb-3 text-2xl font-semibold tracking-tight text-white">
                         {post.title}
                       </h3>
 
-                      <p
-                        style={{
-                          margin: 0,
-                          color: "#dbeafe",
-                          lineHeight: 1.75,
-                          whiteSpace: "pre-wrap",
-                          fontSize: "1rem",
-                        }}
-                      >
+                      <p className="whitespace-pre-wrap text-[15px] leading-7 text-slate-200">
                         {post.content}
                       </p>
                     </div>
 
                     <button
                       onClick={() => handleDelete(post.id)}
-                      style={{
-                        padding: "10px 14px",
-                        borderRadius: "12px",
-                        border: "1px solid rgba(248,113,113,0.45)",
-                        background: "rgba(127,29,29,0.18)",
-                        color: "#fca5a5",
-                        cursor: "pointer",
-                        fontWeight: 600,
-                      }}
+                      className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-2.5 text-sm font-semibold text-red-200 transition hover:border-red-300/40 hover:bg-red-500/20"
                     >
                       Delete
                     </button>
