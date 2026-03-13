@@ -38,13 +38,13 @@ export default function Home() {
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
         body: JSON.stringify({
           author,
           title,
-          content
-        })
+          content,
+        }),
       });
 
       const data = await res.json();
@@ -69,7 +69,7 @@ export default function Home() {
     if (!confirmed) return;
 
     const res = await fetch(`/api/posts/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
     });
 
     const data = await res.json();
@@ -91,167 +91,446 @@ export default function Home() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#f4f7fb",
-        padding: "40px 20px",
-        fontFamily: "Arial, sans-serif",
-        color: "#1f2937"
+        background:
+          "radial-gradient(circle at top left, #1d4ed8 0%, #0f172a 35%, #020617 100%)",
+        color: "#e5e7eb",
+        fontFamily:
+          'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        padding: "32px 20px 64px",
       }}
     >
       <div
         style={{
-          maxWidth: "900px",
-          margin: "0 auto"
+          maxWidth: "1100px",
+          margin: "0 auto",
         }}
       >
-        <header
+        <section
           style={{
-            marginBottom: "32px",
-            textAlign: "center"
+            display: "grid",
+            gridTemplateColumns: "1.2fr 0.8fr",
+            gap: "24px",
+            alignItems: "stretch",
+            marginBottom: "28px",
           }}
         >
-          <h1 style={{ fontSize: "2.4rem", marginBottom: "8px" }}>
-            Creative Mindset Forum
-          </h1>
-          <p style={{ color: "#4b5563", margin: 0 }}>
-            A simple AWS-hosted forum built with Next.js, API Gateway, Lambda, and S3.
-          </p>
-        </header>
+          <div
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: "24px",
+              padding: "32px",
+              backdropFilter: "blur(12px)",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                padding: "6px 12px",
+                borderRadius: "999px",
+                background: "rgba(96,165,250,0.18)",
+                border: "1px solid rgba(147,197,253,0.25)",
+                color: "#bfdbfe",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                marginBottom: "18px",
+              }}
+            >
+              AWS Serverless Forum
+            </div>
+
+            <h1
+              style={{
+                margin: "0 0 14px 0",
+                fontSize: "3rem",
+                lineHeight: 1.05,
+                letterSpacing: "-0.04em",
+                color: "#ffffff",
+              }}
+            >
+              Creative Mindset
+            </h1>
+
+            <p
+              style={{
+                margin: 0,
+                fontSize: "1.08rem",
+                lineHeight: 1.7,
+                color: "#cbd5e1",
+                maxWidth: "650px",
+              }}
+            >
+              A modern community board powered by Next.js, API Gateway, Lambda,
+              and S3. Share ideas, post updates, and keep the conversation
+              flowing with a clean, lightweight serverless app.
+            </p>
+          </div>
+
+          <div
+            style={{
+              background: "linear-gradient(135deg, rgba(59,130,246,0.22), rgba(168,85,247,0.16))",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: "24px",
+              padding: "28px",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+            }}
+          >
+            <h2
+              style={{
+                marginTop: 0,
+                marginBottom: "18px",
+                color: "#ffffff",
+                fontSize: "1.3rem",
+              }}
+            >
+              Quick Stats
+            </h2>
+
+            <div
+              style={{
+                display: "grid",
+                gap: "14px",
+              }}
+            >
+              <div
+                style={{
+                  padding: "16px",
+                  borderRadius: "18px",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <div style={{ color: "#93c5fd", fontSize: "0.9rem" }}>
+                  Total Posts
+                </div>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                    fontWeight: 700,
+                    marginTop: "6px",
+                    color: "#ffffff",
+                  }}
+                >
+                  {posts.length}
+                </div>
+              </div>
+
+              <div
+                style={{
+                  padding: "16px",
+                  borderRadius: "18px",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <div style={{ color: "#c4b5fd", fontSize: "0.9rem" }}>
+                  Latest Activity
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.98rem",
+                    marginTop: "8px",
+                    color: "#e2e8f0",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {posts.length > 0
+                    ? new Date(posts[0].createdAt).toLocaleString()
+                    : "No posts yet"}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section
           style={{
-            background: "#ffffff",
-            borderRadius: "14px",
-            padding: "24px",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-            marginBottom: "32px"
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "24px",
+            padding: "28px",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.28)",
+            marginBottom: "32px",
           }}
         >
-          <h2 style={{ marginTop: 0 }}>Create a Post</h2>
+          <h2
+            style={{
+              marginTop: 0,
+              marginBottom: "8px",
+              color: "#ffffff",
+              fontSize: "1.5rem",
+            }}
+          >
+            Create a Post
+          </h2>
+          <p
+            style={{
+              marginTop: 0,
+              marginBottom: "22px",
+              color: "#cbd5e1",
+            }}
+          >
+            Share an idea, insight, or question with the community.
+          </p>
 
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: "12px" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "14px",
+                marginBottom: "14px",
+              }}
+            >
               <input
                 type="text"
                 placeholder="Your name"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
+                required
                 style={{
                   width: "100%",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: "1px solid #d1d5db"
+                  padding: "14px 16px",
+                  borderRadius: "14px",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: "rgba(15,23,42,0.7)",
+                  color: "#ffffff",
+                  outline: "none",
+                  fontSize: "0.98rem",
                 }}
-                required
               />
-            </div>
 
-            <div style={{ marginBottom: "12px" }}>
               <input
                 type="text"
                 placeholder="Post title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                required
                 style={{
                   width: "100%",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: "1px solid #d1d5db"
+                  padding: "14px 16px",
+                  borderRadius: "14px",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: "rgba(15,23,42,0.7)",
+                  color: "#ffffff",
+                  outline: "none",
+                  fontSize: "0.98rem",
                 }}
-                required
               />
             </div>
 
-            <div style={{ marginBottom: "12px" }}>
-              <textarea
-                placeholder="Write your post here..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  minHeight: "140px",
-                  borderRadius: "8px",
-                  border: "1px solid #d1d5db",
-                  resize: "vertical"
-                }}
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
+            <textarea
+              placeholder="Write your post here..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
               style={{
-                padding: "12px 20px",
-                borderRadius: "8px",
-                border: "none",
-                background: "#2563eb",
-                color: "#fff",
-                cursor: "pointer",
-                fontWeight: 600
+                width: "100%",
+                minHeight: "150px",
+                padding: "16px",
+                borderRadius: "14px",
+                border: "1px solid rgba(255,255,255,0.12)",
+                background: "rgba(15,23,42,0.7)",
+                color: "#ffffff",
+                outline: "none",
+                resize: "vertical",
+                fontSize: "1rem",
+                lineHeight: 1.6,
+              }}
+            />
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "16px",
+                marginTop: "18px",
+                flexWrap: "wrap",
               }}
             >
-              {loading ? "Posting..." : "Create Post"}
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  padding: "13px 22px",
+                  borderRadius: "14px",
+                  border: "none",
+                  background:
+                    "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
+                  color: "#ffffff",
+                  cursor: "pointer",
+                  fontWeight: 700,
+                  fontSize: "0.96rem",
+                  boxShadow: "0 12px 30px rgba(37,99,235,0.35)",
+                }}
+              >
+                {loading ? "Posting..." : "Publish Post"}
+              </button>
 
-          {status ? (
-            <p style={{ marginTop: "14px", color: "#374151" }}>{status}</p>
-          ) : null}
+              {status ? (
+                <div
+                  style={{
+                    padding: "10px 14px",
+                    borderRadius: "12px",
+                    background: "rgba(255,255,255,0.08)",
+                    color: "#e2e8f0",
+                    fontSize: "0.95rem",
+                  }}
+                >
+                  {status}
+                </div>
+              ) : null}
+            </div>
+          </form>
         </section>
 
         <section>
-          <h2>Forum Posts</h2>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "16px",
+              marginBottom: "18px",
+              flexWrap: "wrap",
+            }}
+          >
+            <h2
+              style={{
+                margin: 0,
+                color: "#ffffff",
+                fontSize: "1.6rem",
+              }}
+            >
+              Forum Posts
+            </h2>
+
+            <div
+              style={{
+                color: "#cbd5e1",
+                fontSize: "0.95rem",
+              }}
+            >
+              Showing newest posts first
+            </div>
+          </div>
 
           {posts.length === 0 ? (
-            <p>No posts yet.</p>
+            <div
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                borderRadius: "24px",
+                padding: "28px",
+                color: "#cbd5e1",
+              }}
+            >
+              No posts yet. Be the first to start the conversation.
+            </div>
           ) : (
-            posts.map((post) => (
-              <article
-                key={post.id}
-                style={{
-                  background: "#ffffff",
-                  borderRadius: "14px",
-                  padding: "20px",
-                  marginBottom: "18px",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.06)"
-                }}
-              >
-                <div
+            <div
+              style={{
+                display: "grid",
+                gap: "18px",
+              }}
+            >
+              {posts.map((post) => (
+                <article
+                  key={post.id}
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "12px",
-                    alignItems: "flex-start"
+                    background: "rgba(255,255,255,0.08)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: "24px",
+                    padding: "22px",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 20px 50px rgba(0,0,0,0.22)",
                   }}
                 >
-                  <div>
-                    <h3 style={{ marginTop: 0, marginBottom: "8px" }}>{post.title}</h3>
-                    <p style={{ marginTop: 0, marginBottom: "12px", whiteSpace: "pre-wrap" }}>
-                      {post.content}
-                    </p>
-                    <small style={{ color: "#6b7280" }}>
-                      By {post.author || "Anonymous"} •{" "}
-                      {new Date(post.createdAt).toLocaleString()}
-                    </small>
-                  </div>
-
-                  <button
-                    onClick={() => handleDelete(post.id)}
+                  <div
                     style={{
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      border: "1px solid #ef4444",
-                      background: "#fff",
-                      color: "#ef4444",
-                      cursor: "pointer"
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      gap: "18px",
+                      flexWrap: "wrap",
                     }}
                   >
-                    Delete
-                  </button>
-                </div>
-              </article>
-            ))
+                    <div style={{ flex: 1, minWidth: "250px" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "10px",
+                          alignItems: "center",
+                          flexWrap: "wrap",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            padding: "5px 10px",
+                            borderRadius: "999px",
+                            background: "rgba(96,165,250,0.16)",
+                            color: "#bfdbfe",
+                            fontSize: "0.8rem",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {post.author || "Anonymous"}
+                        </span>
+                        <span
+                          style={{
+                            color: "#94a3b8",
+                            fontSize: "0.85rem",
+                          }}
+                        >
+                          {new Date(post.createdAt).toLocaleString()}
+                        </span>
+                      </div>
+
+                      <h3
+                        style={{
+                          margin: "0 0 10px 0",
+                          color: "#ffffff",
+                          fontSize: "1.3rem",
+                        }}
+                      >
+                        {post.title}
+                      </h3>
+
+                      <p
+                        style={{
+                          margin: 0,
+                          color: "#dbeafe",
+                          lineHeight: 1.75,
+                          whiteSpace: "pre-wrap",
+                          fontSize: "1rem",
+                        }}
+                      >
+                        {post.content}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => handleDelete(post.id)}
+                      style={{
+                        padding: "10px 14px",
+                        borderRadius: "12px",
+                        border: "1px solid rgba(248,113,113,0.45)",
+                        background: "rgba(127,29,29,0.18)",
+                        color: "#fca5a5",
+                        cursor: "pointer",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
           )}
         </section>
       </div>
